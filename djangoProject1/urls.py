@@ -19,10 +19,14 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from accounts import views
+from finance import views as finance_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", TemplateView.as_view(template_name="base.html"), name="base"),
     path("register/", views.CreateUserView.as_view(), name="register"),
-    path("login/", views.LoginView.as_view(), name="login")
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+    path("add_budget/", finance_views.AddBudget.as_view(), name="add_budget"),
+    path("my_budgets/", finance_views.MyBudgets.as_view(), name="my_budgets"),
 ]

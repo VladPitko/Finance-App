@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+ <ul>
+     {% for budget in budgets %}
+        <li>{{ budget.name }} {{ budget.amount }}</li>
+     {% endfor %}
+ </ul>
+{% endblock %}
