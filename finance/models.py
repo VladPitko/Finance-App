@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.template.defaulttags import now
 
 
 class Profile(models.Model):
@@ -29,7 +30,7 @@ class Budget(models.Model):
 class Transaction(models.Model):
     description = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
+    date = models.DateField(default=now)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='transactions')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
 

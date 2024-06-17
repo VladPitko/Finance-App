@@ -19,3 +19,9 @@ class MyBudgets(View):
     def get(self, request):
         budgets = Budget.objects.all()
         return render(request, "finance/my_budgets.html", {"budgets": budgets})
+
+
+
+class AddTransaction(View):
+    def get(self, request):
+        return render(request, "finance/add_transaction.html")
