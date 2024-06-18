@@ -29,4 +29,5 @@ urlpatterns = [
     path("logout/", views.LogoutView.as_view(), name="logout"),
     path("add_budget/", finance_views.AddBudget.as_view(), name="add_budget"),
     path("my_budgets/", finance_views.MyBudgets.as_view(), name="my_budgets"),
+    path("add_transaction/", finance_views.AddTransaction.as_view(), name="add_transaction")
 ]

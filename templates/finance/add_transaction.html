@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-    <form method="post">
+    <form method="post" xmlns="http://www.w3.org/1999/html">
     {% csrf_token %}
         <p>ADD TRANSACTION</p>
     <p><input type="text" name="name" placeholder="name"></p>
         <p><input type="number" name="amount" placeholder="amount"></p>
-        <p>
+        <p><input type="text" name="description" placeholder="description"></p>
+         <p>
+            <select name="categories">
+                {% for Category in categories %}
+                    <option value="{{ Category.id }}">{{ Category.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
             <input type="submit">
         </p>
     
