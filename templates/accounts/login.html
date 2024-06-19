@@ -1,9 +1,21 @@
-{% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <p><input type="text" name="username" placeholder="username"></p>
-        <p><input type="password" name="password" placeholder="password"></p>
-        <button type="submit">Login</button>
-    </form>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <div class="box">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <p><input type="text" name="username" placeholder="Username"></p>
+            <p><input type="password" name="password" placeholder="Password"></p>
+            <button type="submit">Login</button>
+        </form>
+        <div class="account-question">
+            <p>Don't have an account?</p>
+            <a href="{% url 'register' %}" class="account-button">Register</a>
+        </div>
+    </div>
 {% endblock %}

@@ -1,20 +1,23 @@
-{% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
-    <div class="signup-box">
+    <div class="box">
         <h2>Create User</h2>
-        <h3> {{ error }}</h3>
+        <h3>{{ error }}</h3>
         <form method="POST">
-            <p><input type="text" name="username" placeholder="usernane"></p>
-            <p><input type="password" name="password" placeholder="Haslo"></p>
-            <p><input type="password" name="password2" placeholder="Haslo powtorz"></p>
+            <p><input type="text" name="username" placeholder="Username"></p>
+            <p><input type="password" name="password" placeholder="Password"></p>
+            <p><input type="password" name="password2" placeholder="Repeat Password"></p>
             {% csrf_token %}
-            <button type="submit">Create</button>
+            <input type="submit" value="Create">
         </form>
+        <div class="account-question">
+            <p>Do you have an account?</p>
+            <a href="{% url 'login' %}" class="account-button">Log in</a>
+        </div>
     </div>
 {% endblock %}

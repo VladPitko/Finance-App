@@ -1,0 +1,95 @@
+/* General styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Box styles */
+.box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Header styles */
+.box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.box h3 {
+    color: red;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+.box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.box form p {
+    margin-bottom: 15px;
+}
+
+/* Input styles */
+.box input[type="text"],
+.box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Button styles */
+.box input[type="submit"],
+.box button[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+}
+
+.box input[type="submit"]:hover,
+.box button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Account question styles */
+.account-question {
+    margin-top: 20px;
+}
+
+.account-question p {
+    margin: 0;
+    color: #333;
+}
+
+.account-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.account-button:hover {
+    background-color: #218838;
+}

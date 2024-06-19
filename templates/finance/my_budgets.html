@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Budget List</h1>
+    <h1>My Budget</h1>
     <ul>
         {% for budget in object_list %}
             <li>
-                {{ budget.name }}
+                {{ budget.name }} {{ budget.amount }}
                 <a href="{% url 'delete_budget' budget.pk %}">Delete</a>
             </li>
         {% endfor %}
