@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Transaction List</h1>
+    <ul>
+        {% for transaction in object_list %}
+            <li>
+                   {{ transaction.category }} {{ transaction.description }} - {{ transaction.amount }}  
+                <a href="{% url 'delete_transaction' transaction.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

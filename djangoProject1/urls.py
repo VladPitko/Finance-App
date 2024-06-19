@@ -29,5 +29,12 @@ urlpatterns = [
     path("logout/", views.LogoutView.as_view(), name="logout"),
     path("add_budget/", finance_views.AddBudget.as_view(), name="add_budget"),
     path("my_budgets/", finance_views.MyBudgets.as_view(), name="my_budgets"),
-    path("add_transaction/", finance_views.AddTransaction.as_view(), name="add_transaction")
+    path("delete_budget/<int:pk>", finance_views.DeleteBudget.as_view(), name="delete_budget"),
+    path("add_transaction/", finance_views.AddTransaction.as_view(), name="add_transaction"),
+    path("transaction_list/", finance_views.TransactionList.as_view(), name="transaction_list"),
+    path("delete_transaction/<int:pk>/", finance_views.DeleteTransactionView.as_view(), name="delete_transaction"),
+    path("add_category/", finance_views.AddCategoryView.as_view(), name="add_category"),
+    path("category_list/", finance_views.CategoryList.as_view(), name="category_list"),
+    path("update_category/<int:pk>/", finance_views.UpdateCategoryView.as_view(), name="update_category"),
+    path("delete_category/<int:pk>/", finance_views.DeleteCategoryView.as_view(), name="delete_category")
 ]

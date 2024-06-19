@@ -5,8 +5,11 @@
     <title>Base</title>
 </head>
 <body>
- Witam {{ user }}
-{% block content %}
-{% endblock %}
+<div>
+    {% include 'top_header.html' %}
+</div>
+<div>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
