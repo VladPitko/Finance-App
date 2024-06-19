@@ -7,6 +7,7 @@
             <li>
                 {{ category.name }}
                 <a href="{% url 'delete_category' category.pk %}">Delete</a>
+                <a href="{% url 'update_category' category.pk %}">Edit</a>
             </li>
         {% endfor %}
     </ul>

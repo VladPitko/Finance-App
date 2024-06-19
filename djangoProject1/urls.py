@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 from accounts import views
 from finance import views as finance_views
@@ -33,8 +35,13 @@ urlpatterns = [
     path("add_transaction/", finance_views.AddTransaction.as_view(), name="add_transaction"),
     path("transaction_list/", finance_views.TransactionList.as_view(), name="transaction_list"),
     path("delete_transaction/<int:pk>/", finance_views.DeleteTransactionView.as_view(), name="delete_transaction"),
+    path("update_transaction/<int:pk>/", finance_views.TransactionUpdate.as_view(), name="update_transaction"),
     path("add_category/", finance_views.AddCategoryView.as_view(), name="add_category"),
     path("category_list/", finance_views.CategoryList.as_view(), name="category_list"),
     path("update_category/<int:pk>/", finance_views.UpdateCategoryView.as_view(), name="update_category"),
-    path("delete_category/<int:pk>/", finance_views.DeleteCategoryView.as_view(), name="delete_category")
+    path("delete_category/<int:pk>/", finance_views.DeleteCategoryView.as_view(), name="delete_category"),
+    path("profile", finance_views.profile, name="profile"),
+    path('accounts/login/', views.LoginView.as_view(), name='login'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-links">
+                {% if user.is_authenticated %}
+                    <span>Hi {{ user.username }}</span>
+                    <a href="{% url 'logout' %}">Wyloguj</a>
+                {% else %}
+                    <a href="{% url 'register' %}">Zarejestruj</a>
+                    <a href="{% url 'login' %}">Zaloguj</a>
+                {% endif %}
+            </div>
+            <div class="navbar-menu">
+                <a href="{% url 'base' %}">Home</a>
+                <a href="{% url 'add_budget' %}">Add Budget</a>
+                <a href="{% url 'add_transaction' %}">Add Transaction</a>
+                <a href="{% url 'transaction_list' %}">Transaction List</a>
+                <a href="{% url 'my_budgets' %}">My Budget</a>
+                <a href="{% url 'add_category' %}">Add Category</a>
+                <a href="{% url 'category_list' %}">Category List</a>
+                <a href="{% url 'profile' %}" class="active">Profile</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="profile-box">
+            <h2>User Profile</h2>
+            <div class="profile-info">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                {% if profile.image %}
+                    <img src="{{ profile.image.url }}" alt="Profile Image" class="profile-image">
+                {% endif %}
+            </div>
+            <h3>Update Profile</h3>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><input type="text" name="username" placeholder="New Username" value="{{ user.username }}"></p>
+                <p><input type="email" name="email" placeholder="New Email" value="{{ user.email }}"></p>
+                <p><textarea name="bio" placeholder="Bio">{{ profile.bio }}</textarea></p>
+                <p><input type="file" name="image"></p>
+                <p><input type="password" name="password" placeholder="New Password"></p>
+                <input type="submit" value="Update Profile">
+            </form>
+        </div>
+    </main>
+</body>
+</html>

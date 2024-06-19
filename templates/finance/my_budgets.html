@@ -5,7 +5,7 @@
     <ul>
         {% for budget in object_list %}
             <li>
-                {{ budget.name }} {{ budget.amount }}
+                {{ budget.name }} {{ budget.amount }}$
                 <a href="{% url 'delete_budget' budget.pk %}">Delete</a>
             </li>
         {% endfor %}

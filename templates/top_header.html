@@ -5,30 +5,38 @@
     <meta charset="UTF-8">
     <title>My Site</title>
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
+
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="navbar-links">
-                {% if user.is_authenticated %}
-                    <span>Hi {{ user }}</span>
-                    <a href="{% url 'logout' %}">logout</a>
-                {% else %}
-                    <a href="{% url 'register' %}">sign up</a>
-                    <a href="{% url 'login' %}">sign in</a>
-                {% endif %}
-            </div>
-            <div class="navbar-menu">
-                <a href="{% url 'add_budget' %}">Add Budget</a>
-                <a href="{% url 'add_transaction' %}">Add Transaction</a>
-                <a href="{% url 'transaction_list' %}">Transaction List</a>
-                <a href="{% url 'my_budgets' %}">My Budget</a>
-                <a href="{% url 'add_category' %}">Add Category</a>
-                <a href="{% url 'category_list' %}">Category List</a>
-            </div>
-        </nav>
-    </header>
-    {% block content %}
-    {% endblock %}
+<header>
+    <nav class="navbar">
+        <div class="navbar-links">
+            {% if user.is_authenticated %}
+                <span>Hi {{ user }}</span>
+                <a href="{% url 'logout' %}">logout</a>
+            {% else %}
+                <a href="{% url 'register' %}">sign up</a>
+                <a href="{% url 'login' %}">sign in</a>
+            {% endif %}
+        {% if profile.image %}
+                <img src="{{ profile.image.url }}" alt="Profile Image" class="profile-image">
+            {% endif %}
+        </div>
+
+
+        <div class="navbar-menu">
+            <a href="{% url 'base' %}">Home</a>
+            <a href="{% url 'add_budget' %}">Add Budget</a>
+            <a href="{% url 'add_transaction' %}">Add Transaction</a>
+            <a href="{% url 'transaction_list' %}">Transaction List</a>
+            <a href="{% url 'my_budgets' %}">My Budget</a>
+            <a href="{% url 'add_category' %}">Add Category</a>
+            <a href="{% url 'category_list' %}">Category List</a>
+            <a href="{% url 'profile' %}">Profile</a>
+        </div>
+    </nav>
+</header>
+{% block content %}
+{% endblock %}
 </body>
 </html>
