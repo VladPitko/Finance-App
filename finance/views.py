@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -31,10 +32,9 @@ class MyBudgets(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        recent_transactions = Transaction.objects.order_by('-pk')[:5]  # Get the 5 most recent transactions
+        recent_transactions = Transaction.objects.order_by('-pk')
         context['recent_transactions'] = recent_transactions
 
-        # Add a search form for recent transactions
         search_query = self.request.GET.get('search', '')
         context['search_query'] = search_query
         if search_query:
@@ -78,6 +78,16 @@ class TransactionList(LoginRequiredMixin, ListView):
     redirect_field_name = "next"
     model = Transaction
     template_name = "finance/transaction_list.html"
+    context_object_name = 'object_list'  # This ensures the context variable is named object_list
+
+    def get_queryset(self):
+        search_query = self.request.GET.get('search', '')
+        queryset = Transaction.objects.all()
+        if search_query:
+            queryset = queryset.filter(
+                Q(description__icontains=search_query) | Q(category__name__icontains=search_query)
+            )
+        return queryset
 
 
 class DeleteTransactionView(LoginRequiredMixin, DeleteView):
@@ -126,41 +136,40 @@ class UpdateCategoryView(LoginRequiredMixin, UpdateView):
         return reverse("update_category", args=(self.get_object().pk,))
 
 
-class DeleteCategoryView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class DeleteCategoryView(LoginRequiredMixin, DeleteView):
     login_url = "/login/"
     redirect_field_name = "next"
-    permission_required = ['finance.delete_category', 'finance.add_category']
 
     model = Category
     template_name = "finance/delete_form.html"
     success_url = reverse_lazy("category_list")
 
 
-@login_required(login_url="/login/")
+@login_required(login_url='/login/')
 def profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
+
     if request.method == 'POST':
         user_form = request.POST
         profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
 
-        if request.method == 'POST':
+        if profile_form.is_valid():
+            user = request.user
+            user.username = user_form['username']
+            user.email = user_form['email']
+            if user_form['password']:
+                user.set_password(user_form['password'])
+            user.save()
+
             profile.bio = request.POST.get('bio', '')
             if 'image' in request.FILES:
                 profile.image = request.FILES['image']
             profile.save()
+
+            messages.success(request, 'Profile updated successfully.')
             return redirect('profile')
 
-        if profile_form.is_valid():
-            request.user.username = user_form['username']
-            request.user.email = user_form['email']
-            if user_form['password']:
-                request.user.set_password(user_form['password'])
-            request.user.save()
-
-            profile_form.save()
-
-            return redirect('profile')
-
+        messages.error(request, 'Profile update failed. Please correct the errors.')
     else:
         profile_form = ProfileForm(instance=profile)
 

@@ -1,1 +1,2 @@
 from funkcje import test_add_budget_view
+test_add_budget_view()
