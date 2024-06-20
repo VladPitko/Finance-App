@@ -1,13 +1,41 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/budget.css' %}">
+
     <h1>My Budget</h1>
     <ul>
         {% for budget in object_list %}
             <li>
-                {{ budget.name }} {{ budget.amount }}$
+                <div class="budget-info">
+                    <span>{{ budget.name }}</span>
+                    <span>{{ budget.amount }}$</span>
+                </div>
                 <a href="{% url 'delete_budget' budget.pk %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
+
+    <!-- Recent Transactions -->
+    <h2>Recent Transactions
+        <form method="get" class="search-form">
+            <input type="text" name="search" value="{{ search_query }}" placeholder="Search recent transactions...">
+            <button type="submit">Search</button>
+        </form>
+    </h2>
+    
+
+    <ul>
+        {% for transaction in recent_transactions %}
+            <li>
+                {{ transaction.description }}: {{ transaction.amount }}$
+                {% if transaction.category %}
+                    ({{ transaction.category }})
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No recent transactions.</li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}

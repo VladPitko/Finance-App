@@ -10,7 +10,7 @@ body {
 }
 
 /* Box styles */
-.box {
+.boxt {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -20,29 +20,29 @@ body {
 }
 
 /* Header styles */
-.box h2 {
+.boxt h2 {
     margin-bottom: 20px;
     color: #333;
 }
 
-.box h3 {
+.boxt h3 {
     color: red;
     margin-bottom: 20px;
 }
 
 /* Form styles */
-.box form {
+.boxt form {
     display: flex;
     flex-direction: column;
 }
 
-.box form p {
+.boxt form p {
     margin-bottom: 15px;
 }
 
 /* Input styles */
-.box input[type="text"],
-.box input[type="password"] {
+.boxt input[type="text"],
+.boxt input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -52,8 +52,8 @@ body {
 }
 
 /* Button styles */
-.box input[type="submit"],
-.box button[type="submit"] {
+.boxt input[type="submit"],
+.boxt button[type="submit"] {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -64,8 +64,8 @@ body {
     margin: 10px 0;
 }
 
-.box input[type="submit"]:hover,
-.box button[type="submit"]:hover {
+.boxt input[type="submit"]:hover,
+.boxt button[type="submit"]:hover {
     background-color: #0056b3;
 }
 

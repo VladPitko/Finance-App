@@ -51,8 +51,13 @@
 
 input::placeholder {
     color: #aaa;
-    font-size: 16px;
+
     font-style: italic;
+    width: 433px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 10px;
 }
 
 input[type="text"]::placeholder {
@@ -62,3 +67,56 @@ input[type="text"]::placeholder {
 input[type="number"]::placeholder {
     text-align: right;
 }
+
+/* styles.css */
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* Budget list styles */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Budget info styles */
+.budget-info {
+    display: flex;
+    align-items: center;
+}
+
+.budget-info span {
+    margin-right: 10px;
+}
+
+/* Delete link styles */
+a {
+    text-decoration: none;
+    color: #d9534f;
+}
+
+a:hover {
+    color: #23527c;
+}
+
+.budinp [type="number"], .budinp input[type="text"] {
+    width: 433px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 18px;
+}
+

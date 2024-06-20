@@ -1,14 +1,18 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from finance.forms import AddTransactionForm, ProfileForm
-from finance.models import Budget, Category, Transaction, Profile
+from finance.forms import AddTransactionForm, ProfileForm, TagForm
+from finance.models import Budget, Category, Transaction, Profile, Tag
 
 
-class AddBudget(View):
+class AddBudget(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "next"
+
     def get(self, request):
         return render(request, 'finance/add_budget.html')
 
@@ -19,18 +23,41 @@ class AddBudget(View):
         return render(request, 'finance/add_budget.html', {"success": f"Budget added successfully!"})
 
 
-class MyBudgets(ListView):
+class MyBudgets(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Budget
     template_name = 'finance/my_budgets.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recent_transactions = Transaction.objects.order_by('-pk')[:5]  # Get the 5 most recent transactions
+        context['recent_transactions'] = recent_transactions
 
-class DeleteBudget(DeleteView):
+        # Add a search form for recent transactions
+        search_query = self.request.GET.get('search', '')
+        context['search_query'] = search_query
+        if search_query:
+            recent_transactions = recent_transactions.filter(
+                Q(description__icontains=search_query) | Q(category__name__icontains=search_query)
+            )
+
+        context['recent_transactions'] = recent_transactions
+        return context
+
+
+class DeleteBudget(LoginRequiredMixin, DeleteView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Budget
     template_name = "finance/delete_form.html"
     success_url = reverse_lazy("my_budgets")
 
 
-class AddTransaction(View):
+class AddTransaction(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "next"
+
     def get(self, request):
         form = AddTransactionForm()
         return render(request, "finance/form.html", {"form": form})
@@ -46,18 +73,24 @@ class AddTransaction(View):
         return render(request, "finance/form.html", {"form": form})
 
 
-class TransactionList(ListView):
+class TransactionList(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Transaction
     template_name = "finance/transaction_list.html"
 
 
-class DeleteTransactionView(DeleteView):
+class DeleteTransactionView(LoginRequiredMixin, DeleteView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Transaction
     template_name = "finance/delete_form.html"
     success_url = reverse_lazy("transaction_list")
 
 
-class TransactionUpdate(UpdateView):
+class TransactionUpdate(LoginRequiredMixin, UpdateView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Transaction
     fields = "__all__"
     template_name = "finance/form.html"
@@ -66,19 +99,25 @@ class TransactionUpdate(UpdateView):
         return reverse("update_transaction", args=(self.get_object().pk,))
 
 
-class AddCategoryView(CreateView):
+class AddCategoryView(LoginRequiredMixin, CreateView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Category
     fields = "__all__"
     template_name = "finance/form.html"
     success_url = reverse_lazy("add_category")
 
 
-class CategoryList(ListView):
+class CategoryList(LoginRequiredMixin, ListView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Category
     template_name = "finance/category_list.html"
 
 
-class UpdateCategoryView(UpdateView):
+class UpdateCategoryView(LoginRequiredMixin, UpdateView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = Category
     fields = "__all__"
     template_name = "finance/form.html"
@@ -87,7 +126,9 @@ class UpdateCategoryView(UpdateView):
         return reverse("update_category", args=(self.get_object().pk,))
 
 
-class DeleteCategoryView(PermissionRequiredMixin, DeleteView):
+class DeleteCategoryView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     permission_required = ['finance.delete_category', 'finance.add_category']
 
     model = Category
@@ -95,7 +136,7 @@ class DeleteCategoryView(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy("category_list")
 
 
-@login_required
+@login_required(login_url="/login/")
 def profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -129,3 +170,29 @@ def profile(request):
         'profile_form': profile_form,
     }
     return render(request, 'finance/profile.html', context)
+
+
+@login_required(login_url='/login/')
+def tag_list(request):
+    tags = Tag.objects.all()
+    return render(request, 'finance/tag_list.html', {'tags': tags})
+
+
+@login_required(login_url='/login/')
+def add_tag(request):
+    if request.method == 'POST':
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('tag_list')
+    else:
+        form = TagForm()
+    return render(request, 'finance/add_tag.html', {'form': form})
+
+
+class DeleteTag(LoginRequiredMixin, DeleteView):
+    login_url = "/login/"
+    redirect_field_name = "next"
+    model = Tag
+    template_name = "finance/delete_form.html"
+    success_url = reverse_lazy("tag_list")

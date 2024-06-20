@@ -8,7 +8,6 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     image = models.ImageField(upload_to='profile_images/', blank=True)
 
-
     def __str__(self):
         return self.user.username
 

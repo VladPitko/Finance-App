@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Category, Profile
+from .models import Category, Profile, Tag
 
 
 class AddTransactionForm(forms.Form):
@@ -16,3 +16,9 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'bio': forms.Textarea(attrs={'rows': 4}),
         }
+
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ['name']

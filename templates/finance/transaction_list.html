@@ -1,13 +1,28 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/transaction.css' %}">
+
     <h1>Transaction List</h1>
+    <form method="get" class="search-form">
+        <input type="text" name="search" value="{{ request.GET.search }}" placeholder="Search transactions..." class="search-input">
+        <button type="submit" class="search-button">Search</button>
+    </form>
     <ul>
         {% for transaction in object_list %}
             <li>
-                   {{ transaction.category }} {{ transaction.description }} - {{ transaction.amount }}$
+                <div class="transaction-info">
+                    <span>{{ transaction.category }}</span>
+                    <span>{{ transaction.description }}</span>
+                    <span>- {{ transaction.amount }}$</span>
+                </div>
                 <a href="{% url 'delete_transaction' transaction.pk %}">Delete</a>
                 <a href="{% url 'update_transaction' transaction.pk %}">Edit</a>
+                <select name="tag">
+                    {% for tag in object_list %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    {% endfor %}
+                </select>
             </li>
         {% endfor %}
     </ul>

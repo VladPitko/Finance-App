@@ -1,14 +1,19 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block content %}
-    <h1>Category List</h1>
-    <ul>
-        {% for category in object_list %}
-            <li>
-                {{ category.name }}
-                <a href="{% url 'delete_category' category.pk %}">Delete</a>
-                <a href="{% url 'update_category' category.pk %}">Edit</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <link rel="stylesheet" href="{% static 'css/category.css' %}">
+    <div class="boxt">
+        <h1>Category List</h1>
+        <ul>
+            {% for category in object_list %}
+                <li>
+                    {{ category.name }}
+                    <a href="{% url 'delete_category' category.pk %}" class="delete-link">Delete</a>
+                    <a href="{% url 'update_category' category.pk %}" class="edit-link">Edit</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

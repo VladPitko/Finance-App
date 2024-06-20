@@ -25,7 +25,7 @@ from finance import views as finance_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", TemplateView.as_view(template_name="base.html"), name="base"),
+    path("", TemplateView.as_view(template_name="finance/my_budgets.html"), name="base"),
     path("register/", views.CreateUserView.as_view(), name="register"),
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
@@ -42,6 +42,9 @@ urlpatterns = [
     path("delete_category/<int:pk>/", finance_views.DeleteCategoryView.as_view(), name="delete_category"),
     path("profile", finance_views.profile, name="profile"),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
+    path('add_tag/', finance_views.add_tag, name="add_tag"),
+    path('tags', finance_views.tag_list, name='tag_list'),
+    path('delete_tag/<int:pk>/', finance_views.DeleteTag.as_view(), name="delete_tag")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
