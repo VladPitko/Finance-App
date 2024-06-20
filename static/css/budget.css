@@ -1,0 +1,64 @@
+/* Additions for add budget */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.boxbud {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    width: 550px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.boxbud h2 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #dff0d8;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.button {
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.button:hover {
+    background-color: #23527c;
+}
+
+/* Placeholder styles */
+
+input::placeholder {
+    color: #aaa;
+    font-size: 16px;
+    font-style: italic;
+}
+
+input[type="text"]::placeholder {
+    text-transform: capitalize;
+}
+
+input[type="number"]::placeholder {
+    text-align: right;
+}

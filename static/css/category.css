@@ -1,0 +1,43 @@
+/* Additions for category list */
+
+.boxt {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.boxt h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.boxt ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.boxt li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.boxt li:last-child {
+    border-bottom: none;
+}
+
+.boxt a.delete-link {
+    color: #d9534f;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.boxt a.edit-link {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.boxt a:hover {
+    text-decoration: underline;
+}
